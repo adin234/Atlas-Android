@@ -153,6 +153,20 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
 
     public AtlasMessagesAdapter setRecyclerView(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
+        final Handler handler = new Handler();
+        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom != oldBottom ) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
         return this;
     }
 
