@@ -91,7 +91,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
 
     //Style
     private MessageStyle mMessageStyle;
-
+    private Context mContext;
     private RecyclerView mRecyclerView;
     private boolean mReadReceiptsEnabled = true;
 
@@ -106,7 +106,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         mDateFormat = android.text.format.DateFormat.getDateFormat(context);
         mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
         mDisplayMetrics = context.getResources().getDisplayMetrics();
-
+        mContext = context;
         mQueryController = layerClient.newRecyclerViewController(null, null, this);
         mQueryController.setPreProcessCallback(new ListViewController.PreProcessCallback<Message>() {
             @Override
@@ -153,20 +153,6 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
 
     public AtlasMessagesAdapter setRecyclerView(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
-        final Handler handler = new Handler();
-        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View view, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (bottom != oldBottom ) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyDataSetChanged();
-                        }
-                    });
-                }
-            }
-        });
         return this;
     }
 
@@ -434,7 +420,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
             maxWidth -= avatarParams.width + avatarParams.rightMargin + avatarParams.leftMargin;
         }
         // TODO: subtract spacing rather than multiply by 0.8 to handle screen sizes more cleanly
-        int maxHeight = (int) Math.round(0.8 * mRecyclerView.getHeight());
+        int maxHeight = (int) mContext.getResources().getDimension(R.dimen.atlas_recycler_max_image_height);
 
         viewHolder.mCellHolderSpecs.isMe = cellType.mMe;
         viewHolder.mCellHolderSpecs.position = position;
