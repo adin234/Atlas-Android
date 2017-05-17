@@ -91,7 +91,6 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
 
     //Style
     private MessageStyle mMessageStyle;
-    private Context mContext;
     private RecyclerView mRecyclerView;
     private boolean mReadReceiptsEnabled = true;
 
@@ -106,7 +105,6 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         mDateFormat = android.text.format.DateFormat.getDateFormat(context);
         mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
         mDisplayMetrics = context.getResources().getDisplayMetrics();
-        mContext = context;
         mQueryController = layerClient.newRecyclerViewController(null, null, this);
         mQueryController.setPreProcessCallback(new ListViewController.PreProcessCallback<Message>() {
             @Override
@@ -420,7 +418,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
             maxWidth -= avatarParams.width + avatarParams.rightMargin + avatarParams.leftMargin;
         }
         // TODO: subtract spacing rather than multiply by 0.8 to handle screen sizes more cleanly
-        int maxHeight = (int) mContext.getResources().getDimension(R.dimen.atlas_recycler_max_image_height);
+        int maxHeight = (int) viewHolder.mRoot.getContext().getResources().getDimension(R.dimen.atlas_messages_max_cell_height);
 
         viewHolder.mCellHolderSpecs.isMe = cellType.mMe;
         viewHolder.mCellHolderSpecs.position = position;

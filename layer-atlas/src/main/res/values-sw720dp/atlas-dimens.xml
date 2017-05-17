@@ -16,7 +16,7 @@
 <resources>
 
     <!-- ####################################################################################### -->
-    <!-- # Recycler Maximum Image Height Dimension                                             # -->
+    <!-- # Recycler Maximum Cell Height Dimension                                             # -->
     <!-- ####################################################################################### -->
-    <dimen name="atlas_recycler_max_image_height">876dp</dimen>
+    <dimen name="atlas_messages_max_cell_height">876dp</dimen>
 </resources>
